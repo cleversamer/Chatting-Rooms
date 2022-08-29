@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -9,6 +10,17 @@ import config from "config.json";
 const routes = config.routes.client;
 
 const Login = () => {
+  const [values, setValues] = useState({ email: "", password: "" });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Calling the server...
+  };
+
+  const handleChange = (key) => (e) =>
+    setValues({ ...values, [key]: e.currentTarget.value });
+
   return (
     <Container>
       <Row>
@@ -21,7 +33,12 @@ const Login = () => {
           <Form className="login-form">
             <Form.Group className="mb-3" controlId="formBasicEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={values.email}
+                onChange={handleChange("email")}
+              />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
               </Form.Text>
@@ -29,7 +46,12 @@ const Login = () => {
 
             <Form.Group className="mb-3" controlId="formBasicPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={values.password}
+                onChange={handleChange("password")}
+              />
             </Form.Group>
 
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
