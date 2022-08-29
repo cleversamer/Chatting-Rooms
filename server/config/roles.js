@@ -8,8 +8,15 @@ const allRights = {
 };
 
 let grantsObject = {
-  admin: {},
-  user: {},
+  admin: {
+    user: allRights,
+  },
+  user: {
+    user: {
+      "read:own": ["*"],
+      "update:own": ["*"],
+    },
+  },
 };
 
 const roles = new AccessControl(grantsObject);
