@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const httpStatus = require("http-status");
+const errors = require("../config/errors");
 
 class ApiError extends Error {
   constructor(statusCode, message) {
@@ -31,8 +32,15 @@ const errorConverter = (err, req, res, next) => {
   next(err);
 };
 
+const unsupportedRouteHandler = (req, res, next) => {
+  const statusCode = httpStatus.NOT_FOUND;
+  const message = errors.system.unsupportedRoute;
+  throw new ApiError(statusCode, message);
+};
+
 module.exports = {
   ApiError,
   errorHandler,
   errorConverter,
+  unsupportedRouteHandler,
 };
