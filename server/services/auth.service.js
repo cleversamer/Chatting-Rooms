@@ -38,6 +38,9 @@ module.exports.signInWithEmailAndPassword = async (email, password) => {
       );
     }
 
+    user.status = "online";
+    await user.save();
+
     return user;
   } catch (err) {
     throw err;
