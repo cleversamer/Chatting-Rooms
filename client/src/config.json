@@ -1,8 +1,11 @@
 {
   "routes": {
     "client": {
-      "home": "/home",
-      "notFound": "/not-found"
+      "home": "/",
+      "notFound": "/not-found",
+      "login": "/login",
+      "register": "/register",
+      "chat": "/chat"
     }
   }
 }
