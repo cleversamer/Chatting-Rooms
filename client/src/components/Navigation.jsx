@@ -25,7 +25,7 @@ const Navigation = () => {
               <Nav.Link>Login</Nav.Link>
             </LinkContainer>
 
-            <LinkContainer to={routes.login}>
+            <LinkContainer to={routes.chat}>
               <Nav.Link>Chat</Nav.Link>
             </LinkContainer>
 
