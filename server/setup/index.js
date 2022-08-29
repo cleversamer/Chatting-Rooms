@@ -1,7 +1,8 @@
 const setupSanitization = require("./sanitize");
 const setupMongoDB = require("./db");
+const socket = require("./socket");
 const routes = require("../routes");
-const config = require("../config.json");
+const host = require("../config/host");
 const {
   errorHandler,
   errorConverter,
@@ -10,7 +11,7 @@ const {
 const passport = require("passport");
 const { jwtStrategy } = require("../middleware/passport");
 
-module.exports = (app) => {
+module.exports = (app, server) => {
   setupMongoDB();
   setupSanitization(app);
   app.use(passport.initialize());
@@ -20,7 +21,9 @@ module.exports = (app) => {
   app.use(errorConverter);
   app.use(errorHandler);
 
-  const PORT = process.env.PORT || config.development.port;
+  socket(server);
+
+  const PORT = process.env.PORT || host.server.port;
   app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`);
   });

@@ -1,8 +1,9 @@
-const config = require("../config.json");
 const mongoose = require("mongoose");
+const host = require("../config/host");
 
 module.exports = () => {
-  const mongoURI = process.env["MONGODB_URI"] || config.development.mongoURI;
+  const mongoURI = process.env["MONGODB_URI"] || host.server.db;
+
   mongoose
     .connect(mongoURI)
     .then((value) => {
