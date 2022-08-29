@@ -21,8 +21,13 @@ const user = {
   alreadyVerified: "User is already verified.",
 };
 
+const codes = {
+  duplicateIndexKey: 11000,
+};
+
 module.exports = {
   system,
   auth,
   user,
+  codes,
 };
