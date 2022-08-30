@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = Object.freeze({
   client: {
     url: "http://192.168.1.235:3000",
   },
@@ -6,4 +6,4 @@ module.exports = {
     port: 4000,
     db: "mongodb://localhost:27017/chatting-rooms",
   },
-};
+});
