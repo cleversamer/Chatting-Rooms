@@ -1,13 +1,24 @@
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser, logout } from "store/user";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import LinkContainer from "react-router-bootstrap/LinkContainer";
+import cookie from "services/cookie";
 import config from "config.json";
 
 const routes = config.routes.client;
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  const handleLogout = () => {
+    cookie.remove();
+    dispatch(logout());
+  };
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -21,25 +32,41 @@ const Navigation = () => {
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <LinkContainer to={routes.login}>
-              <Nav.Link>Login</Nav.Link>
-            </LinkContainer>
+            {!user && (
+              <LinkContainer to={routes.login}>
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+            )}
 
-            <LinkContainer to={routes.chat}>
-              <Nav.Link>Chat</Nav.Link>
-            </LinkContainer>
+            {!user && (
+              <LinkContainer to={routes.register}>
+                <Nav.Link>Register</Nav.Link>
+              </LinkContainer>
+            )}
 
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">
+            {user && (
+              <LinkContainer to={routes.chat}>
+                <Nav.Link>Chat</Nav.Link>
+              </LinkContainer>
+            )}
+
+            {user && (
+              <NavDropdown title="Account" id="basic-nav-dropdown">
+                <LinkContainer to={routes.home}>
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Logout
+                  </NavDropdown.Item>
+                </LinkContainer>
+                {/* <NavDropdown.Item href="#action/3.2">
                 Another action
               </NavDropdown.Item>
               <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item href="#action/3.4">
                 Separated link
-              </NavDropdown.Item>
-            </NavDropdown>
+              </NavDropdown.Item> */}
+              </NavDropdown>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

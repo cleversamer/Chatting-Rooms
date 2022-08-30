@@ -6,6 +6,12 @@
       "login": "/login",
       "register": "/register",
       "chat": "/chat"
+    },
+    "server": {
+      "baseUrl": "http://192.168.1.235:4000/api",
+      "login": "/auth/login",
+      "register": "/auth/register",
+      "isauth": "/users/isauth"
     }
   }
 }

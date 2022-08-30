@@ -1,21 +1,36 @@
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { login } from "store/user";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { Link } from "react-router-dom";
 import config from "config.json";
+import auth from "api/auth";
+import toast from "services/toast";
+import cookie from "../services/cookie";
 
 const routes = config.routes.client;
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [values, setValues] = useState({ name: "", email: "", password: "" });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault();
 
-    // Calling the server...
+      const { name, email, password } = values;
+      const { data } = await auth.register(name, email, password);
+      cookie.set(data.token);
+      dispatch(login(data.user));
+      navigate(routes.chat);
+    } catch (err) {
+      toast.showError(err?.response?.data?.message || err.message);
+    }
   };
 
   const handleChange = (key) => (e) =>

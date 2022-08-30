@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+import { selectUser } from "store/user";
+
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -7,6 +10,8 @@ import config from "config.json";
 const routes = config.routes.client;
 
 const Home = () => {
+  const user = useSelector(selectUser);
+
   return (
     <Row>
       <Col
@@ -17,7 +22,7 @@ const Home = () => {
           <h1>Share the world with your friends</h1>
           <p>Chatting Rooms allows you to connect with the world!</p>
 
-          <LinkContainer to={routes.chat}>
+          <LinkContainer to={user ? routes.chat : routes.login}>
             <Button variant="success">
               Get Started <i className="fas fa-comments home-message-icon"></i>
             </Button>
