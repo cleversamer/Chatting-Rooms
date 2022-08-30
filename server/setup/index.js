@@ -11,7 +11,7 @@ const {
 const passport = require("passport");
 const { jwtStrategy } = require("../middleware/passport");
 
-module.exports = (app, server) => {
+module.exports = (app) => {
   setupMongoDB();
   setupSanitization(app);
   app.use(passport.initialize());
@@ -21,10 +21,10 @@ module.exports = (app, server) => {
   app.use(errorConverter);
   app.use(errorHandler);
 
-  socket(server);
-
   const PORT = process.env.PORT || host.server.port;
-  app.listen(PORT, () => {
+  const server = app.listen(PORT, () => {
     console.log(`App is listening on port ${PORT}`);
   });
+
+  socket(server);
 };

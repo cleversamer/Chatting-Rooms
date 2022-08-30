@@ -1,15 +1,16 @@
 const host = require("../config/host");
 const { usersService, messagesService } = require("../services");
+const socketIo = require("socket.io");
 
-module.exports = (app) => {
-  const config = {
+module.exports = (server) => {
+  const options = {
     cors: {
       origin: host.client.url,
       methods: ["GET", "POST"],
     },
   };
 
-  const io = require("socket.io")(app, config);
+  const io = socketIo(server, options);
 
   io.on("connection", (socket) => {
     socket.on("new-user", async () => {
